@@ -50,7 +50,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.Crypto">
-      <HintPath>..\..\BouncyCastle.Crypto.dll</HintPath>
+      <HintPath>References\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="Costura, Version=6.0.0.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
       <HintPath>packages\Costura.Fody.6.0.0\lib\netstandard2.0\Costura.dll</HintPath>
@@ -65,13 +65,7 @@
       <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="SimpleCrypto">
-      <HintPath>..\..\SimpleCrypto.dll</HintPath>
-    </Reference>
-    <Reference Include="SimpleEncoding">
-      <HintPath>..\..\SimpleEncoding.dll</HintPath>
-    </Reference>
-    <Reference Include="SimpleHashing">
-      <HintPath>..\..\SimpleHashing.dll</HintPath>
+      <HintPath>References\SimpleCrypto.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

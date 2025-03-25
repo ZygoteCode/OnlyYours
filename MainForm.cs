@@ -89,7 +89,10 @@ public partial class MainForm : MetroSuite.MetroForm
                 listBox1.Items.Add(credentialsEntry.Key);
             }
 
-            listBox1.SelectedIndex = savedSelectedIndex;
+            if (listBox1.Items.Count > 0)
+            {
+                listBox1.SelectedIndex = savedSelectedIndex;
+            }
         }
 
         guna2TextBox1.ReadOnly = !(listBox1.Items.Count > 0) || !(listBox1.SelectedIndex >= 0);
