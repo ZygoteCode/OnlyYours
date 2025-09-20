@@ -6,15 +6,46 @@ using System.IO;
 
 public class Utils
 {
+    private static char[] _characters = "abcdefghijklmnopqrstuvwxyz0123456789".ToCharArray();
+
+    public static string FilterString(string inputString)
+    {
+        inputString = inputString.ToLower();
+        string result = "";
+
+        foreach (char c in inputString)
+        {
+            bool exists = false;
+
+            foreach (char s in _characters)
+            {
+                if (c.Equals(s))
+                {
+                    exists = true;
+                    break;
+                }
+            }
+
+            if (exists)
+            {
+                result += c;
+            }
+        }
+
+        return result;
+    }
+
     public static byte[] Combine(params byte[][] arrays)
     {
         byte[] ret = new byte[arrays.Sum(x => x.Length)];
         int offset = 0;
+
         foreach (byte[] data in arrays)
         {
             Buffer.BlockCopy(data, 0, ret, offset, data.Length);
             offset += data.Length;
         }
+
         return ret;
     }
 
@@ -56,8 +87,8 @@ public class Utils
 
     public static byte[] Compress(byte[] data)
     {
-        using (var compressedStream = new MemoryStream())
-        using (var gzipStream = new GZipStream(compressedStream, CompressionLevel.Optimal, leaveOpen: true))
+        using (MemoryStream compressedStream = new MemoryStream())
+        using (GZipStream gzipStream = new GZipStream(compressedStream, CompressionLevel.Optimal, leaveOpen: true))
         {
             gzipStream.Write(data, 0, data.Length);
             gzipStream.Close();
@@ -67,9 +98,9 @@ public class Utils
 
     public static byte[] Decompress(byte[] compressedData)
     {
-        using (var compressedStream = new MemoryStream(compressedData))
-        using (var gzipStream = new GZipStream(compressedStream, CompressionMode.Decompress))
-        using (var resultStream = new MemoryStream())
+        using (MemoryStream compressedStream = new MemoryStream(compressedData))
+        using (GZipStream gzipStream = new GZipStream(compressedStream, CompressionMode.Decompress))
+        using (MemoryStream resultStream = new MemoryStream())
         {
             gzipStream.CopyTo(resultStream);
             return resultStream.ToArray();

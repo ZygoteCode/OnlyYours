@@ -33,6 +33,7 @@ public partial class MainForm : MetroSuite.MetroForm
 
         Globals.PasswordManagerInstance.DeleteCredentials(listBox1.SelectedItem.ToString());
         listBox1.Items.Remove(listBox1.SelectedItem);
+        listBox2.Items.Remove(listBox2.SelectedItem);
         guna2TextBox1.Text = "";
     }
 
@@ -83,10 +84,12 @@ public partial class MainForm : MetroSuite.MetroForm
             }
 
             listBox1.Items.Clear();
+            listBox2.Items.Clear();
 
             foreach (KeyValuePair<string, string> credentialsEntry in Globals.PasswordManagerInstance.GetCredentials())
             {
                 listBox1.Items.Add(credentialsEntry.Key);
+                listBox2.Items.Add(credentialsEntry.Key);
             }
 
             if (listBox1.Items.Count > 0)
@@ -129,6 +132,24 @@ public partial class MainForm : MetroSuite.MetroForm
         else
         {
             guna2GradientButton3.PerformClick();
+        }
+    }
+
+    private void guna2TextBox2_TextChanged(object sender, System.EventArgs e)
+    {
+        listBox1.Items.Clear();
+
+        foreach (KeyValuePair<string, string> credentialsEntry in Globals.PasswordManagerInstance.GetCredentials())
+        {
+            string originalKey = credentialsEntry.Key;
+
+            string key = Utils.FilterString(originalKey),
+                inputString = Utils.FilterString(guna2TextBox2.Text);
+
+            if (key.Contains(inputString) || inputString.Contains(key))
+            {
+                listBox1.Items.Add(originalKey);
+            }
         }
     }
 }

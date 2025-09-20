@@ -1,12 +1,53 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\bolog\\Desktop\\GitHub Repositories\\OnlyYours\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\exile\\Desktop\\GitHub Repositories\\OnlyYours\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{398C274A-7EF7-4A11-AB39-631F708ECA6C}|OnlyYours.csproj|c:\\users\\exile\\desktop\\github repositories\\onlyyours\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{398C274A-7EF7-4A11-AB39-631F708ECA6C}|OnlyYours.csproj|solutionrelative:mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{398C274A-7EF7-4A11-AB39-631F708ECA6C}|OnlyYours.csproj|C:\\Users\\exile\\Desktop\\GitHub Repositories\\OnlyYours\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{398C274A-7EF7-4A11-AB39-631F708ECA6C}|OnlyYours.csproj|solutionrelative:mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainForm.cs",
+              "DocumentMoniker": "C:\\Users\\exile\\Desktop\\GitHub Repositories\\OnlyYours\\MainForm.cs",
+              "RelativeDocumentMoniker": "MainForm.cs",
+              "ToolTip": "C:\\Users\\exile\\Desktop\\GitHub Repositories\\OnlyYours\\MainForm.cs",
+              "RelativeToolTip": "MainForm.cs",
+              "ViewState": "AgIAAHYAAAAAAAAAAAAAAIQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-20T10:12:37.583Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainForm.cs [Progettazione]",
+              "DocumentMoniker": "C:\\Users\\exile\\Desktop\\GitHub Repositories\\OnlyYours\\MainForm.cs",
+              "RelativeDocumentMoniker": "MainForm.cs",
+              "ToolTip": "C:\\Users\\exile\\Desktop\\GitHub Repositories\\OnlyYours\\MainForm.cs [Progettazione]",
+              "RelativeToolTip": "MainForm.cs [Progettazione]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-20T10:03:37.501Z",
+              "EditorCaption": " [Progettazione]"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
