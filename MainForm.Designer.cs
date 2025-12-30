@@ -207,13 +207,11 @@
             // 
             // timer1
             // 
-            this.timer1.Interval = 1;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick_1);
             // 
             // timer2
             // 
-            this.timer2.Interval = 250;
-            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick_1);
             // 
             // guna2TextBox2
             // 
@@ -279,7 +277,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.State = MetroSuite.MetroForm.FormState.Custom;
             this.Style = MetroSuite.Design.Style.Dark;
-            this.Text = "OnlyYours V3 | Made by https://github.com/ZygoteCode/";
+            this.Text = "OnlyYours V4 | Made by https://github.com/ZygoteCode/";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.ResumeLayout(false);
 

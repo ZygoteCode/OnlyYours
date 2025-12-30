@@ -71,7 +71,45 @@ public partial class MainForm : MetroSuite.MetroForm
         }
     }
 
-    private void timer1_Tick(object sender, System.EventArgs e)
+    private void guna2TextBox1_TextChanged(object sender, System.EventArgs e)
+    {
+        if (listBox1.SelectedIndex < 0 || listBox1.SelectedItem == null || guna2TextBox1.ReadOnly)
+        {
+            return;
+        }
+
+        Globals.PasswordManagerInstance.UpdateCredentials(listBox1.SelectedItem.ToString(), guna2TextBox1.Text);
+    }
+
+    private void listBox1_SelectedIndexChanged(object sender, System.EventArgs e)
+    {
+        if (listBox1.SelectedIndex < 0 || listBox1.SelectedItem == null)
+        {
+            return;
+        }
+
+        guna2TextBox1.Text = Globals.PasswordManagerInstance.GetCredentialsValue(listBox1.SelectedItem.ToString());
+    }
+
+    private void guna2TextBox2_TextChanged(object sender, System.EventArgs e)
+    {
+        listBox1.Items.Clear();
+
+        foreach (KeyValuePair<string, string> credentialsEntry in Globals.PasswordManagerInstance.GetCredentials())
+        {
+            string originalKey = credentialsEntry.Key;
+
+            string key = Utils.FilterString(originalKey),
+                inputString = Utils.FilterString(guna2TextBox2.Text);
+
+            if (key.Contains(inputString) || inputString.Contains(key))
+            {
+                listBox1.Items.Add(originalKey);
+            }
+        }
+    }
+
+    private void timer1_Tick_1(object sender, System.EventArgs e)
     {
         if (Globals.CredentialsUpdateReceived)
         {
@@ -101,27 +139,7 @@ public partial class MainForm : MetroSuite.MetroForm
         guna2TextBox1.ReadOnly = !(listBox1.Items.Count > 0) || !(listBox1.SelectedIndex >= 0);
     }
 
-    private void guna2TextBox1_TextChanged(object sender, System.EventArgs e)
-    {
-        if (listBox1.SelectedIndex < 0 || listBox1.SelectedItem == null || guna2TextBox1.ReadOnly)
-        {
-            return;
-        }
-
-        Globals.PasswordManagerInstance.UpdateCredentials(listBox1.SelectedItem.ToString(), guna2TextBox1.Text);
-    }
-
-    private void listBox1_SelectedIndexChanged(object sender, System.EventArgs e)
-    {
-        if (listBox1.SelectedIndex < 0 || listBox1.SelectedItem == null)
-        {
-            return;
-        }
-
-        guna2TextBox1.Text = Globals.PasswordManagerInstance.GetCredentialsValue(listBox1.SelectedItem.ToString());
-    }
-
-    private void timer2_Tick(object sender, System.EventArgs e)
+    private void timer2_Tick_1(object sender, System.EventArgs e)
     {
         timer2.Stop();
 
@@ -132,24 +150,6 @@ public partial class MainForm : MetroSuite.MetroForm
         else
         {
             guna2GradientButton3.PerformClick();
-        }
-    }
-
-    private void guna2TextBox2_TextChanged(object sender, System.EventArgs e)
-    {
-        listBox1.Items.Clear();
-
-        foreach (KeyValuePair<string, string> credentialsEntry in Globals.PasswordManagerInstance.GetCredentials())
-        {
-            string originalKey = credentialsEntry.Key;
-
-            string key = Utils.FilterString(originalKey),
-                inputString = Utils.FilterString(guna2TextBox2.Text);
-
-            if (key.Contains(inputString) || inputString.Contains(key))
-            {
-                listBox1.Items.Add(originalKey);
-            }
         }
     }
 }

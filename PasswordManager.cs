@@ -46,9 +46,51 @@ public class PasswordManager
 
         byte[] toBeCompressed = Utils.Combine(passwordBytes.Skip(16).Take(12).ToArray(), finalHash, encrypted);
         byte[] compressed = Utils.Compress(toBeCompressed);
+
+        if (compressed == null || compressed.Length == 0)
+        {
+            throw new Exception("Compression error: produced empty output.");
+        }
+
         byte[] result = Utils.Combine(Utils.GetKeccakHash(compressed), compressed);
 
-        File.WriteAllBytes("credentials.plf", Utils.Combine(new byte[4] { 0xFF, 0xFE, 0x0D, 0x0A }, result));
+        if (result == null || result.Length < 100)
+        {
+            throw new Exception("Serialization error: output too small or empty.");
+        }
+
+        AtomicWrite("credentials.plf", Utils.Combine(new byte[4] { 0xFF, 0xFE, 0x0D, 0x0A }, result));
+    }
+
+    public static void AtomicWrite(string path, byte[] data)
+    {
+        string directory = Path.GetDirectoryName(path);
+        string tempPath = Path.Combine(directory, Path.GetFileName(path) + ".tmp");
+        string backupPath = Path.Combine(directory, Path.GetFileName(path) + ".bak");
+
+        using (var fs = new FileStream(tempPath, FileMode.Create, FileAccess.Write, FileShare.None))
+        {
+            fs.Write(data, 0, data.Length);
+            fs.Flush(true);
+        }
+
+        try
+        {
+            using (FileStream fs = new FileStream(tempPath, FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                fs.Write(data, 0, data.Length);
+                fs.Flush(true);
+            }
+
+            File.Replace(tempPath, path, backupPath, ignoreMetadataErrors: true);
+        }
+        finally
+        {
+            if (File.Exists(tempPath))
+            {
+                File.Delete(tempPath);
+            }
+        }
     }
 
     public void LoadAllCredentials(string password)
