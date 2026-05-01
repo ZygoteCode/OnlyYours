@@ -1,15 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using Org.BouncyCastle.Bcpg.OpenPgp;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Runtime;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 
 public partial class MainForm : MetroSuite.MetroForm
 {
+    [DllImport("psapi.dll")]
+    static extern int EmptyWorkingSet(IntPtr hwProc);
+
+    [DllImport("kernel32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool SetProcessWorkingSetSize(IntPtr process, UIntPtr minimumWorkingSetSize, UIntPtr maximumWorkingSetSize);
+
     public MainForm()
     {
         InitializeComponent();
         Globals.PasswordManagerInstance = new PasswordManager();
         timer1.Start();
         timer2.Start();
+        new Thread(ClearRAM).Start();
     }
 
     private void guna2GradientButton1_Click(object sender, System.EventArgs e)
@@ -17,6 +31,24 @@ public partial class MainForm : MetroSuite.MetroForm
         Globals.Purpose = 1;
         MultipurposeForm multipurposeForm = new MultipurposeForm();
         multipurposeForm.Show();
+    }
+
+    public void ClearRAM()
+    {
+        while (true)
+        {
+            Thread.Sleep(750);
+            CleanRAM();
+        }
+    }
+
+    public void CleanRAM()
+    {
+        EmptyWorkingSet(Process.GetCurrentProcess().Handle);
+        GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
+        GC.Collect(GC.MaxGeneration);
+        GC.WaitForPendingFinalizers();
+        SetProcessWorkingSetSize(Process.GetCurrentProcess().Handle, (UIntPtr)0xFFFFFFFF, (UIntPtr)0xFFFFFFFF);
     }
 
     private void guna2GradientButton2_Click(object sender, System.EventArgs e)
@@ -69,6 +101,9 @@ public partial class MainForm : MetroSuite.MetroForm
         {
             e.Cancel = true;
         }
+
+        CleanRAM();
+        Process.GetCurrentProcess().Kill();
     }
 
     private void guna2TextBox1_TextChanged(object sender, System.EventArgs e)
@@ -151,5 +186,13 @@ public partial class MainForm : MetroSuite.MetroForm
         {
             guna2GradientButton3.PerformClick();
         }
+    }
+
+    private void guna2GradientButton5_Click(object sender, System.EventArgs e)
+    {
+        ProtoRandom.ProtoRandom random = new ProtoRandom.ProtoRandom(200);
+        char[] _characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"|\\£$%&/()=?'èé[{+*]+òç@à°#ù§,;.:-_<>".ToCharArray();
+        string generatedPassword = random.GetRandomString(_characters, 64);
+        Clipboard.SetText(generatedPassword);
     }
 }
